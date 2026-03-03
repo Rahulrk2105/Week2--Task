@@ -1,28 +1,33 @@
-# 🚀 Week 2 Task – AWS 
+# 🚀 Week 2 Task – AWS Infrastructure Deployment
 
 ## 📖 Project Overview
 
-This project demonstrates the deployment of a complete AWS infrastructure environment using core AWS services.  
-The objective of this task was to understand AWS networking fundamentals and deploy interconnected services in a structured and practical manner.
+This project demonstrates the deployment of a complete AWS infrastructure environment using core AWS services.
 
-The infrastructure includes:
+The objective of this task was to understand AWS networking fundamentals and deploy interconnected services in a structured, practical, and production-like manner.
+
+---
+
+## 🧩 Infrastructure Components
+
+The deployment includes:
 
 - Custom VPC
 - Public Subnet
 - Internet Gateway
 - Route Table Configuration
 - EC2 Instance (Amazon Linux)
-- S3 Bucket (Static Website Hosting)
+- Amazon S3 (Static Website Hosting)
 - VPC Endpoint (Gateway – S3)
-- SQS Queue (Visibility Timeout: 90 seconds)
+- Amazon SQS (Visibility Timeout: 90 seconds)
 
 ---
 
-# 🏗️ Architecture Workflow
+## 🏗️ Architecture Workflow
 
-The deployment followed this logical sequence:
+The deployment followed this logical flow:
 
-Network Setup → Compute Deployment → Storage Setup → Private Connectivity → Messaging Service → Static Website Hosting
+**Network Setup → Compute Deployment → Storage Setup → Private Connectivity → Messaging Service → Static Website Hosting**
 
 ---
 
@@ -30,7 +35,7 @@ Network Setup → Compute Deployment → Storage Setup → Private Connectivity 
 
 ---
 
-## 🥇 1. VPC Created
+## 🥇 1️⃣ VPC Created
 
 A custom Virtual Private Cloud (VPC) was created with CIDR block:
 
@@ -42,29 +47,29 @@ DNS resolution and DNS hostnames were enabled to allow internal communication wi
 
 ---
 
-## 🥈 2. Public Subnet Created
+## 🥈 2️⃣ Public Subnet Created
 
 A public subnet was created inside the VPC with CIDR block:
 
 `10.0.1.0/24`
 
-Auto-assign public IPv4 was enabled to allow instances to receive a public IP automatically.
+Auto-assign public IPv4 was enabled to allow instances to receive public IP addresses automatically.
 
 ![Subnet Created](screenshots/02-subnet-created.png)
 
 ---
 
-## 🥉 3. Internet Gateway Attached
+## 🥉 3️⃣ Internet Gateway Attached
 
 An Internet Gateway (IGW) was created and attached to the VPC to enable outbound internet connectivity.
 
-Without the IGW, instances inside the VPC cannot access external networks.
+Without the IGW, resources inside the VPC cannot access external networks.
 
 ![Internet Gateway](screenshots/03-internet-gateway-attached.png)
 
 ---
 
-## 4. Route Table Configured
+## 4️⃣ Route Table Configured
 
 The route table associated with the subnet was updated with:
 
@@ -77,7 +82,7 @@ This ensures that internet-bound traffic is routed correctly.
 
 ---
 
-## 5. EC2 Instance Launched
+## 5️⃣ EC2 Instance Launched
 
 An EC2 instance (Amazon Linux, t2.micro) was launched inside the public subnet.
 
@@ -91,66 +96,66 @@ A public IPv4 address was assigned for external access.
 
 ---
 
-## 6. Internet Connectivity Verified
+## 6️⃣ Internet Connectivity Verified
 
 Internet connectivity was verified by connecting to the EC2 instance and running:
 
-```
+```bash
 ping google.com
 ```
 
-Successful responses confirmed correct network configuration.
+Successful responses confirmed correct VPC networking configuration.
 
 ![Internet Test](screenshots/06-ec2-internet-test.png)
 
 ---
 
-## 7. S3 Bucket Created
+## 7️⃣ S3 Bucket Created
 
-An Amazon S3 bucket was created in the same region to host a static website.
+An Amazon S3 bucket was created in the same AWS region to host a static website.
 
 ![S3 Bucket](screenshots/07-s3-bucket-created.png)
 
 ---
 
-## 8. Files Uploaded to S3
+## 8️⃣ Files Uploaded to S3
 
 The following files were uploaded:
 
 - `index.html`
 - `sample.txt`
 
-Static website hosting was enabled in bucket properties.
+Static website hosting was enabled in the bucket properties.
 
 ![Files Uploaded](screenshots/08-s3-bucket-files-upload.png)
 
 ---
 
-## 9. VPC Endpoint Created (Gateway Type – S3)
+## 9️⃣ VPC Endpoint Created (Gateway Type – S3)
 
 A Gateway-type VPC Endpoint for Amazon S3 was created and associated with the route table.
 
-This allows private communication between the VPC and S3 without using the public internet.
+This enables private communication between the VPC and S3 without traversing the public internet.
 
 ![VPC Endpoint](screenshots/09-vpc-endpoint.png)
 
 ---
 
-## 10. SQS Queue Created
+## 🔟 SQS Queue Created
 
 An Amazon SQS Standard Queue was created with:
 
-Visibility Timeout: **90 seconds**
+**Visibility Timeout: 90 seconds**
 
-Test messages were successfully sent and received.
+Test messages were successfully sent and received to validate functionality.
 
 ![SQS Created](screenshots/10-sqs-created.png)
 
 ---
 
-## 11. S3 Bucket Policy Configured
+## 1️⃣1️⃣ S3 Bucket Policy Configured
 
-A bucket policy was added to allow public read access to objects in the bucket:
+A bucket policy was added to allow public read access to objects:
 
 ```json
 {
@@ -161,13 +166,13 @@ A bucket policy was added to allow public read access to objects in the bucket:
 }
 ```
 
-This enabled public access for static website hosting.
+This configuration enabled static website hosting.
 
 ![Bucket Policy](screenshots/11-s3-bucket-policy.png)
 
 ---
 
-## 12. Static Website Successfully Hosted
+## 1️⃣2️⃣ Static Website Successfully Hosted
 
 The static website was accessed using the S3 website endpoint URL.
 
@@ -175,6 +180,7 @@ This confirms:
 - Correct bucket configuration
 - Proper policy setup
 - Successful file upload
+- Public accessibility
 
 ![Static Website Output](screenshots/12-static-website-output.png)
 
@@ -186,7 +192,7 @@ This confirms:
 ✔ Static website hosted and accessible  
 ✔ SQS queue tested successfully  
 ✔ VPC endpoint created and available  
-✔ Networking components properly configured  
+✔ Networking components configured correctly  
 
 ---
 
@@ -207,17 +213,13 @@ This confirms:
 
 # 🎯 Key Learning Outcomes
 
-- Understood AWS networking architecture
-- Configured public subnet with internet access
-- Launched and secured EC2 instance
-- Hosted static website using S3
-- Implemented SQS messaging service
-- Created and configured VPC endpoint
-- Managed bucket policies and security rules
+- Designed and configured AWS networking architecture
+- Implemented public subnet with internet access
+- Deployed and secured EC2 instance
+- Hosted a static website using Amazon S3
+- Implemented messaging using Amazon SQS
+- Configured VPC endpoint for private S3 communication
+- Managed bucket policies and security configurations
 
 ---
 
-# 👨‍💻 Author
-
-Rahul RK  
-Aspiring Cloud / System Engineer
